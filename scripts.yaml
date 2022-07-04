@@ -1,0 +1,21 @@
+open_garage_door:
+  sequence:
+    - alias: "Check if gatage door is closed"
+      condition: state
+      entity_id: sensor.garage_door_status
+      state: "closed"
+    - alias: "Open garage door"
+      service: switch.turn_on
+      data:
+        entity_id: switch.garage_door_relay
+
+close_garage_door:
+  sequence:
+    - alias: "Check if gatage door is open"
+      condition: state
+      entity_id: sensor.garage_door_status
+      state: "open"
+    - alias: "Cloase garage door"
+      service: switch.turn_on
+      data:
+        entity_id: switch.garage_door_relay
