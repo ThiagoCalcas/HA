@@ -105,4 +105,5 @@ card:
   icon: mdi:garage
   name: Close Garage Door
 ```
-![Uploading image.png…]()
+![image](https://user-images.githubusercontent.com/15160444/177219440-7e93ddd0-517d-4e48-b37c-e8a0f3ea5fa8.png)
+
