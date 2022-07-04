@@ -1,3 +1,4 @@
+##### Garage Door Open ##################################
 open_garage_door:
   sequence:
     - alias: "Check if gatage door is closed"
@@ -9,6 +10,7 @@ open_garage_door:
       data:
         entity_id: switch.garage_door_relay
 
+##### Garage Door Close ##################################
 close_garage_door:
   sequence:
     - alias: "Check if gatage door is open"
