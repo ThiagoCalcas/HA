@@ -1,0 +1,19 @@
+##### Garage Door Status ##################################
+- platform: template
+  sensors:
+    garage_door_status:
+      friendly_name: Garage Door Status
+      value_template: >-
+        {% set doorstate = states('sensor.garage_door_relay_general_purpose') | int %}
+        {% if doorstate < 10 %}
+        closed
+        {% else %}
+        open
+        {% endif %}
+      icon_template: >-
+        {% set doorstate = states('sensor.garage_door_relay_general_purpose') | int %}
+        {% if doorstate < 10 %}
+        mdi:garage
+        {% else %}
+        mdi:garage-open
+        {% endif %}
