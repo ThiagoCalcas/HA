@@ -1,0 +1,79 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+##### Yaml file locations ###############################
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+sensor: !include sensors.yaml
+template: !include templates.yaml
+
+# manually adding Wyze camera(s)
+camera:
+  - platform: generic
+    name: Office Camera
+    still_image_url: local/wyze-logo.jpg
+    stream_source: !secret camera_stream_source
+
+wyzeapi:
+  username: !secret wyzeapi_username
+  password: !secret wyzeapi_password
+
+logger:
+  default: warning
+  logs:
+    custom_components.wyzeapi: debug
+    wyzeapy: debug
+
+nest:
+  client_id: !secret nest_client_id
+  client_secret: !secret nest_client_secret
+  # "Project ID" in the Device Access Console
+  project_id: !secret nest_project_id
+  # Provide the full path exactly as shown under "Subscription name" in Google Cloud Console
+  subscriber_id: !secret nest_subscriber_id
+
+notify:
+  # Create email SMTP connection to any email
+  - name: "GMAIL_EMAIL"
+    platform: smtp
+    port: 587
+    timeout: 15
+    sender: !secret gmail_email
+    encryption: starttls
+    recipient: !secret email_recipient
+    server: smtp.gmail.com
+    username: !secret gmail_email
+    password: !secret gmail_password
+    sender_name: "Home Assistant Email"
+  # Create email SMTP connection to ISP mail-to-sms recipient
+  - name: "GMAIL_EMAIL_TO_SMS"
+    platform: smtp
+    port: 587
+    timeout: 15
+    sender: !secret gmail_email
+    encryption: starttls
+    recipient: !secret gmail_recipient
+    server: smtp.gmail.com
+    username: !secret gmail_email
+    password: !secret gmail_password
+    sender_name: "Home Assistant Email"
+
+aws:
+  credentials:
+    - name: AWS Account
+      aws_access_key_id: !secret aws_sns_id
+      aws_secret_access_key: !secret aws_sns_key
+  notify:
+    # use the first credential defined in aws integration by default
+    - service: sns
+      region_name: ca-central-1
+      name: sns_ca-central-1
+      credential_name: AWS Account
+      aws_access_key_id: !secret aws_sns_id
+      aws_secret_access_key: !secret aws_sns_key
