@@ -64,16 +64,24 @@ notify:
     password: !secret gmail_password
     sender_name: "Home Assistant Email"
 
+# We can have multiple AWS servers by adding on the `notify`
 aws:
   credentials:
     - name: AWS Account
       aws_access_key_id: !secret aws_sns_id
       aws_secret_access_key: !secret aws_sns_key
   notify:
-    # use the first credential defined in aws integration by default
+    # Using Canada Central
     - service: sns
       region_name: ca-central-1
       name: sns_ca-central-1
+      credential_name: AWS Account
+      aws_access_key_id: !secret aws_sns_id
+      aws_secret_access_key: !secret aws_sns_key
+    # Using US Ease 2 (Ohio)
+    - service: sns
+      region_name: us-east-2
+      name: sns_us_east_2
       credential_name: AWS Account
       aws_access_key_id: !secret aws_sns_id
       aws_secret_access_key: !secret aws_sns_key
