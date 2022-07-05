@@ -17,3 +17,23 @@
         {% else %}
         mdi:garage-open
         {% endif %}
+
+##### Back Door Status ##################################
+# There is one sensor on the glass door and another on the screen door
+# I want to consider "open" only if both doors are open, so the cats can't go out
+- platform: template
+  sensors:
+    back_door_status:
+      friendly_name: Back Door Status
+      value_template: >-
+        {% if states('binary_sensor.lumi_lumi_sensor_magnet_aq2_05f64708_on_off') == on and states('binary_sensor.lumi_lumi_sensor_magnet_aq2_5a600708_on_off == on') %}
+        open
+        {% else %}
+        closed
+        {% endif %}
+      icon_template: >-
+        {% if states('binary_sensor.lumi_lumi_sensor_magnet_aq2_05f64708_on_off') == on and states('binary_sensor.lumi_lumi_sensor_magnet_aq2_5a600708_on_off == on') %}
+        mdi:door-open
+        {% else %}
+        mdi:door-closed
+        {% endif %}
