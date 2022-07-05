@@ -1,0 +1,581 @@
+### Automations script ###
+# Replace values form AWS with real keys
+- id: '1633647392334'
+  alias: Turn On Plants Light
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00:00
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 787e832cfb130fffef317365416a670f
+    entity_id: switch.plants_lamp
+    domain: switch
+  mode: single
+- id: '1633647550679'
+  alias: Turn Off Plants Lamp
+  description: ''
+  trigger:
+  - platform: time
+    at: '20:00:00'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 787e832cfb130fffef317365416a670f
+    entity_id: switch.plants_lamp
+    domain: switch
+  mode: single
+- id: '1642699136850'
+  alias: Basement lights - turn on - night
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.projector_sensor_motion
+    id: Basement Sensor
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  condition:
+  - condition: device
+    type: is_off
+    device_id: a6f6d7f1d1c4b9e14b2f2a6baf6bddfd
+    entity_id: light.basement_tv_dimmer_switch
+    domain: light
+  - condition: sun
+    before: sunrise
+    after: sunset
+  action:
+  - type: turn_on
+    device_id: 71021af7048e1a87fd06276df7e1456d
+    entity_id: light.strip
+    domain: light
+    brightness_pct: 100
+  - type: turn_on
+    device_id: a6f6d7f1d1c4b9e14b2f2a6baf6bddfd
+    entity_id: light.basement_tv_dimmer_switch
+    domain: light
+    brightness_pct: 20
+  mode: single
+- id: '1642730141298'
+  alias: Basement lights - turn off
+  description: ''
+  trigger:
+  - type: turned_off
+    platform: device
+    device_id: 635e961756cdcbc19f8f9c4e8728753e
+    entity_id: binary_sensor.projector_sensor_motion
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 71021af7048e1a87fd06276df7e1456d
+    entity_id: light.strip
+    domain: light
+  - type: turn_off
+    device_id: a6f6d7f1d1c4b9e14b2f2a6baf6bddfd
+    entity_id: light.basement_tv_dimmer_switch
+    domain: light
+  mode: single
+- id: '1643758871347'
+  alias: Japanese Classes - Lights On
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+  condition:
+  - condition: and
+    conditions:
+    - condition: time
+      weekday:
+      - thu
+      after: '16:00:00'
+      before: '21:00:00'
+  action:
+  - type: turn_on
+    device_id: 884df6fadd0bd751374439b60a35cd82
+    entity_id: light.office_lamp
+    domain: light
+    brightness_pct: 100
+  - type: turn_on
+    device_id: 71b5fa601ba0bd718506262dc006d832
+    entity_id: light.pc
+    domain: light
+    brightness_pct: 100
+  - type: turn_on
+    device_id: 09669f358cf2c0833da8c69403f512ee
+    entity_id: light.hue_white_lamp_1
+    domain: light
+    brightness_pct: 100
+  mode: single
+- id: '1643758925475'
+  alias: Japanese Classes - Lights Off
+  description: ''
+  trigger:
+  - platform: time
+    at: '21:00:00'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 884df6fadd0bd751374439b60a35cd82
+    entity_id: light.office_lamp
+    domain: light
+  - type: turn_off
+    device_id: 71b5fa601ba0bd718506262dc006d832
+    entity_id: light.pc
+    domain: light
+  - type: turn_off
+    device_id: 09669f358cf2c0833da8c69403f512ee
+    entity_id: light.hue_white_lamp_1
+    domain: light
+  mode: single
+- id: '1643833864631'
+  alias: Laundry lights - Turn On
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: c4cd62988fe622ae74307c26f049eb08
+    entity_id: binary_sensor.third_reality_inc_3rms16bz_f35ae7ff_ias_zone
+    domain: binary_sensor
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 38df4f9e2224f55cc579051d4e7d8f8a
+    entity_id: light.laundry_sink
+    domain: light
+    brightness_pct: 100
+  - type: turn_on
+    device_id: e12e4ed92901a4d0ab25d6744a559fff
+    entity_id: light.machine
+    domain: light
+    brightness_pct: 100
+  - type: turn_on
+    device_id: ee8911de97aeb20702b0292bc6e3319f
+    entity_id: light.water_supply
+    domain: light
+    brightness_pct: 100
+  mode: single
+- id: '1643833911589'
+  alias: Laundry lights - Turn Off
+  description: ''
+  trigger:
+  - type: no_motion
+    platform: device
+    device_id: c4cd62988fe622ae74307c26f049eb08
+    entity_id: binary_sensor.third_reality_inc_3rms16bz_f35ae7ff_ias_zone
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 38df4f9e2224f55cc579051d4e7d8f8a
+    entity_id: light.laundry_sink
+    domain: light
+  - type: turn_off
+    device_id: e12e4ed92901a4d0ab25d6744a559fff
+    entity_id: light.machine
+    domain: light
+  - type: turn_off
+    device_id: ee8911de97aeb20702b0292bc6e3319f
+    entity_id: light.water_supply
+    domain: light
+  - type: turn_off
+    device_id: a02f0d832bcdc86c6d547c97b14a50f8
+    entity_id: light.hue_white_lamp_1_2
+    domain: light
+  mode: single
+- id: '1644000987062'
+  alias: Water in Basement Window - SMS
+  description: ''
+  trigger:
+  - type: moist
+    platform: device
+    device_id: dea2667e1907b44a7a3cf55b40dd512a
+    entity_id: binary_sensor.unk_manufacturer_unk_model_00c2e7ff_ias_zone
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: notify.gmail_email_to_sms
+    data:
+      title: Water Alert
+      message: In [Water Leak Sensor - Basement Window]
+  mode: single
+- id: '1644254717422'
+  alias: Water in Basement Bathroom Sink - SMS
+  description: ''
+  trigger:
+  - type: moist
+    platform: device
+    device_id: 19b603ed160c922b50cb20865889b78b
+    entity_id: binary_sensor.third_reality_inc_3rws18bz_97c2e7ff_ias_zone
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: notify.gmail_email_to_sms
+    data:
+      title: Water Alert
+      message: In [Water Leak Sensor - Basement Bathroom Sink]
+  mode: single
+- id: '1644255078162'
+  alias: Water in Dishwasher - SMS
+  description: ''
+  trigger:
+  - type: moist
+    platform: device
+    device_id: db8861de9863eec8699c4f18e6e640a2
+    entity_id: binary_sensor.third_reality_inc_3rws18bz_7a22e7ff_ias_zone
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: notify.gmail_email_to_sms
+    data:
+      title: Water Alert
+      message: In [Water Leak Sensor - Dishwasher]
+  mode: single
+- id: '1644255110510'
+  alias: Water in Kitchen Sink - SMS
+  description: ''
+  trigger:
+  - type: moist
+    platform: device
+    device_id: 3f56b430946aff7a605f689d7af65531
+    entity_id: binary_sensor.third_reality_inc_3rws18bz_0328e7ff_ias_zone
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: notify.gmail_email_to_sms
+    data:
+      title: Water Alert
+      message: In [Water Leak Sensor - Kitchen Sink]
+  mode: single
+- id: '1644255139310'
+  alias: Water in Master Bedroom Sink - SMS
+  description: ''
+  trigger:
+  - type: moist
+    platform: device
+    device_id: 4dfa3480e0b864c14766677534e25741
+    entity_id: binary_sensor.third_reality_inc_3rws18bz_ias_zone
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: notify.gmail_email_to_sms
+    data:
+      title: Water Alert
+      message: In [Water Leak Sensor - Master Bedroom Sink]
+  mode: single
+- id: '1644255170735'
+  alias: Water in Upstairs Bathroom Sink - SMS
+  description: ''
+  trigger:
+  - type: moist
+    platform: device
+    device_id: 26b6094af9084b3313a1f8fa1bf43b34
+    entity_id: binary_sensor.third_reality_inc_3rws18bz_3b2ce7ff_ias_zone
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: notify.gmail_email_to_sms
+    data:
+      title: Water Alert
+      message: In [Water Leak Sensor - Upstairs Bathroom Sink]
+  mode: single
+- id: '1644726996651'
+  alias: Click - Button Office
+  description: ''
+  trigger:
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_ieee: 00:12:4b:00:25:1f:4d:5b
+  condition: []
+  action:
+  - type: toggle
+    device_id: 884df6fadd0bd751374439b60a35cd82
+    entity_id: light.office_lamp
+    domain: light
+  - type: toggle
+    device_id: 71b5fa601ba0bd718506262dc006d832
+    entity_id: light.pc
+    domain: light
+  - type: toggle
+    device_id: 09669f358cf2c0833da8c69403f512ee
+    entity_id: light.hue_white_lamp_1
+    domain: light
+  mode: single
+- id: '1644853864727'
+  alias: Click - Button Laundry
+  description: ''
+  trigger:
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_ieee: 00:12:4b:00:25:1f:c5:48
+  condition: []
+  action:
+  - type: toggle
+    device_id: a02f0d832bcdc86c6d547c97b14a50f8
+    entity_id: light.hue_white_lamp_1_2
+    domain: light
+  mode: single
+- id: '1649894069034'
+  alias: Closet lights - turn on
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.third_reality_inc_3rms16bz_ias_zone
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 79b0c85640449e59c1b7f67519dfc567
+    entity_id: light.hue_white_lamp_1_3
+    domain: light
+    brightness_pct: 100
+  mode: single
+- id: '1649894108948'
+  alias: Closet lights - turn off
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.third_reality_inc_3rms16bz_ias_zone
+    from: 'on'
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 79b0c85640449e59c1b7f67519dfc567
+    entity_id: light.hue_white_lamp_1_3
+    domain: light
+  mode: single
+- id: '1649950940585'
+  alias: Cat Fountain - turn on
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: b5976288ca44919cf355c1d489e9aa38
+    entity_id: binary_sensor.third_reality_inc_3rms16bz_8ab5e7ff_ias_zone
+    domain: binary_sensor
+  condition: []
+  action:
+  - type: turn_on
+    device_id: efebe39d1e71bdd5582df5607d556927
+    entity_id: switch.cat_fountain
+    domain: switch
+  mode: single
+- id: '1649950975896'
+  alias: Cat Fountain - turn off
+  description: ''
+  trigger:
+  - type: no_motion
+    platform: device
+    device_id: b5976288ca44919cf355c1d489e9aa38
+    entity_id: binary_sensor.third_reality_inc_3rms16bz_8ab5e7ff_ias_zone
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  condition: []
+  action:
+  - type: turn_off
+    device_id: efebe39d1e71bdd5582df5607d556927
+    entity_id: switch.cat_fountain
+    domain: switch
+  mode: single
+- id: '1651339679762'
+  alias: Basement lights - turn on - day
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.projector_sensor_motion
+    id: Basement Sensor
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  condition:
+  - condition: device
+    type: is_off
+    device_id: a6f6d7f1d1c4b9e14b2f2a6baf6bddfd
+    entity_id: light.basement_tv_dimmer_switch
+    domain: light
+  - condition: sun
+    before: sunset
+    after: sunrise
+  action:
+  - type: turn_on
+    device_id: 71021af7048e1a87fd06276df7e1456d
+    entity_id: light.strip
+    domain: light
+    brightness_pct: 100
+  - type: turn_on
+    device_id: a6f6d7f1d1c4b9e14b2f2a6baf6bddfd
+    entity_id: light.basement_tv_dimmer_switch
+    domain: light
+    brightness_pct: 60
+  mode: single
+- id: '1655656544730'
+  alias: Click - Garage button
+  description: ''
+  trigger:
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_ieee: 00:12:4b:00:25:00:04:9d
+  condition: []
+  action:
+  - type: turn_on
+    device_id: a4d367914531005f574179c8669419d8
+    entity_id: switch.garage_door_relay
+    domain: switch
+  mode: single
+- id: '1655852180259'
+  alias: Sensor - Back door Open
+  description: Will trigger when back door is opened
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.back_door_status
+    from: closed
+    to: open
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 20
+  condition: []
+  action:
+  - service: notify.sns_ca_central_1
+    data:
+      target: [add aws target name]
+      message: Porta de tras ta aberta
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.back_door_alert_triggered
+  mode: single
+- id: '1656723010128'
+  alias: Sensor - Back door Closed
+  description: Will trigger when back door is opened
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.back_door_status
+    from: open
+    to: closed
+  condition:
+  - condition: state
+    entity_id: input_boolean.back_door_alert_triggered
+    state: 'on'
+  action:
+  - service: notify.sns_ca_central_1
+    data:
+      target: [add aws target name]
+      message: Porta de trás está fechada ฅ^•ﻌ•^ฅ
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.back_door_alert_triggered
+  mode: single
+- id: '1656791224370'
+  alias: Sensor - Garage door open for 5 min
+  description: Will trigger when garage door is opened for 5 minutes
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.garage_door_status
+    from: closed
+    to: open
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  condition: []
+  action:
+  - service: notify.sns_ca_central_1
+    data:
+      target: [add aws target name]
+      message: Porta da garagem aberta por 5 minutos
+  mode: single
+- id: '1656975284758'
+  alias: Email low battery devices
+  description: Weekly report of low battery devices
+  trigger:
+  - platform: time
+    at: '10:00:00'
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    before: '11:00:00'
+    after: 00:00:00
+  action:
+  - service: notify.gmail_email
+    data:
+      title: Weekly Report
+      message: Here is a list of devices with batery under {{ states('input_number.battery_threshold')
+        }}  {{ states('sensor.low_battery_devices') }}
+  mode: single
+- id: '1656977038112'
+  alias: Turn the lights ON when ENTER home
+  description: ''
+  trigger:
+  - platform: zone
+    entity_id: person.thiago_calcas
+    zone: zone.home
+    event: enter
+  condition:
+  - condition: sun
+    before: sunrise
+    after: sunset
+  action:
+  - type: turn_on
+    device_id: 72ca06b1e3bace2403c81c8c7777e09f
+    entity_id: light.front
+    domain: light
+    brightness_pct: 100
+  mode: single
+- id: '1656977378312'
+  alias: Garage side door open while not at home
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: 78690a8ab8356319b1e93b394ae787d9
+    entity_id: binary_sensor.lumi_lumi_sensor_magnet_aq2_on_off
+    domain: binary_sensor
+  condition:
+  - condition: state
+    entity_id: device_tracker.oneplus_7t
+    state: not_home
+  action:
+  - service: notify.sns_ca_central_1
+    data:
+      target: [add aws target name]
+      message: Porta lateral da garagem foi aberta quando o Thiago nao esta em casa
+  mode: single
